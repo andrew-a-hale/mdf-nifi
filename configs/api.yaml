@@ -1,0 +1,29 @@
+id: api-v1
+
+# Config
+config:
+  version: v1
+  domain: example
+  name: api-example
+  primary_key: [id]
+  source:
+    connector: api
+    resource_fqn: localhost:8080/data
+    is_cdc: false
+    timestamp_field: ts
+  destination:
+    connector: local
+    write_method: append
+    ordering: [ts]
+  trigger:
+    cron: "* * * * *"
+  validate:
+    not_null: [id, ts]
+    unique: [id]
+  fields:
+    - label: id
+      data_type: string
+    - label: value
+      data_type: string
+    - label: ts
+      data_type: timestamp

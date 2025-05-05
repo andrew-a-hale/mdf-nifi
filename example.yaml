@@ -1,0 +1,52 @@
+id: domain-minute-example-v1
+
+# Connectors
+connectors:
+  <domain>_api:
+    type: api
+    ...
+  <domain>_datawarehouse:
+    type: odbc
+    ...
+  <domain>_database:
+    type: odbc
+    ...
+  <domain>_filesystem:
+    type: local
+    ...
+  <domain>_cloudstorage:
+    type: blob
+    ...
+  <domain>_queue:
+    type: queue
+    ...
+
+# Config
+config:
+  version: v1
+  domain: domain
+  name: minute-example
+  primary_key: [<fields>, ...]
+  source:
+    connector: <connector>
+    resource_fqn: /path/to/resource
+    is_cdc: [false, true]
+    timestamp_field: <field>
+  destination:
+    connector: <connector>
+    write_method: [append, overwrite, ignore, merge]
+    ordering: [<fields>, ...]
+  trigger:
+    cron: "* * * * *"
+  # trigger:
+  #   watch: location
+  validate:
+    not_null: [<fields>, ...]
+    unique: [<fields>, ...]
+  fields:
+    - label: id
+      data_type: string
+    - label: value
+      data_type: string
+    - label: created_at
+      data_type: timestamp
