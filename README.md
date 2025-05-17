@@ -43,9 +43,15 @@ podman run \
 
 ## Questions
 
-- How to setup triggers?
-  - NiFi has watchers and cron expressions and these can
-be used to insert messages into the job queue.
-- How to setup Connectors in NiFi? Manually.
-- How should NiFi fetch configs for jobs?
-  - Dictionary File + Pull Config from Context Parameters
+- Do we want to support any transformations?
+
+## Ideas / Note
+
+- Job Queues are prioritised with normal, high, urgent
+- Version Controlled pipelines
+- Internal State Management is cluster wide
+- Optional Parameters block for each connector (defaults) with overrides in the configuration connector blocks
+- Consider secret management
+- Consider how to safely update configuration
+- Consider change management around pipeline
+- Set guidelines to prevent scope creep

@@ -1,45 +1,65 @@
-id: domain-minute-example-v1
-
-# Connectors
 connectors:
   <domain>_api:
     type: api
+    default_parameters: # eg. OAuth
+      ...
     ...
   <domain>_datawarehouse:
     type: odbc
+    default_parameters: # eg. fetch size
+      ...
     ...
   <domain>_database:
     type: odbc
+    default_parameters: # eg. fetch size
+      ...
     ...
-  <domain>_filesystem:
+  <domain>_filesystem: 
     type: local
+    default_parameters: # eg. file type
+      ...
     ...
   <domain>_cloudstorage:
     type: blob
+    default_parameters: # eg. file type
+      ...
     ...
   <domain>_queue:
     type: queue
+    default_parameters:
+      ...
     ...
 
-# Config
+id: domain-minute-example-v1
+
 config:
   version: v1
   domain: domain
   name: minute-example
   primary_key: [<fields>, ...]
+  is_cdc: [false, true]
+  cdc_op_field: "__op" # optional
   source:
     connector: <connector>
     resource_fqn: /path/to/resource
-    is_cdc: [false, true]
     timestamp_field: <field>
+    parameters: # overrides
+      ...
   destination:
     connector: <connector>
     write_method: [append, overwrite, ignore, merge]
     ordering: [<fields>, ...]
+    parameters: # overrides
+      ...
   trigger:
     cron: "* * * * *"
   # trigger:
   #   watch: location
+  #   polling interval: 60 # seconds
+  #   processed_file_action: move # or delete
+  #   processing_path_suffix: processing/
+  #   archive_path_suffix: archive/
+  #   error_path_suffix: error/
   validate:
     not_null: [<fields>, ...]
     unique: [<fields>, ...]
@@ -50,3 +70,9 @@ config:
       data_type: string
     - label: created_at
       data_type: timestamp
+  on_error:
+    max_retries: 3
+    dlq_connector: <connector>
+    dlq_resource_fqn: <topic>
+  on_notify:
+    email: [<email>, ...]
