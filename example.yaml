@@ -47,25 +47,26 @@ config:
       ...
   destination:
     connector: <connector>
+    resource_fqn: <resource>
     write_method: [append, overwrite, ignore, merge]
     ordering: [<fields>, ...]
     parameters: # overrides
       ...
   trigger:
     cron: "* * * * *"
-  # trigger:
-  #   watch: location
-  #   polling interval: 60 # seconds
-  #   processed_file_action: move # or delete
-  #   processing_path_suffix: processing/
-  #   archive_path_suffix: archive/
-  #   error_path_suffix: error/
+    # watch: <uri>
+    # polling interval: 60 # seconds
+    # processed_file_action: move # or delete
+    # processing_path_suffix: processing/
+    # archive_path_suffix: archive/
+    # error_path_suffix: error/
   validate:
     not_null: [<fields>, ...]
     unique: [<fields>, ...]
   fields:
     - label: id
       data_type: string
+      override: new_id
     - label: value
       data_type: string
     - label: created_at

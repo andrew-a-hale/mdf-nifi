@@ -45,11 +45,12 @@ podman run \
 
 - Do we want to support any transformations?
 
-## Ideas / Note
+## Ideas / Notes
 
 - Job Queues are prioritised with normal, high, urgent
 - Version Controlled pipelines
 - Internal State Management is cluster wide
+  - `last_processed_watermark` is a state variable for each flow
 - Optional Parameters block for each connector (defaults) with overrides in the configuration connector blocks
 - Consider secret management
 - Consider how to safely update configuration
